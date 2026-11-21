@@ -15,6 +15,11 @@ class ExchangeTests(unittest.TestCase):
         self.assertIn('width', result["字段"])
         self.assertEqual(result["数值环境"], "2.2.6")
 
+    def test_alternate_exchange_is_readable(self):
+        path = Path(__file__).resolve().parent / "samples" / "archival-gap.json"
+        result = inspect(path)
+        self.assertGreater(result["字节"], 0)
+
     def test_incomplete_scene_is_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "broken.json"
