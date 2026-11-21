@@ -7,5 +7,5 @@ samples/scene.json 是本地合成的录音切片和按块读取交换。可检�
 ```sh
 python3 -m pip install -r requirements.txt
 python3 inspect_exchange.py samples/scene.json
-python3 -m unittest -v
+python3 -m unittest discover -s tests -v
 ```
