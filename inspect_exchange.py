@@ -21,16 +21,16 @@ def inspect(path: Path) -> dict:
 
 def validate(data: dict, case_dir: Path) -> None:
     recordings = {chunk for chunks in data["recordings"].values() for chunk in chunks}
-        coverage = {chunk: set() for chunk in recordings}
-        for block in data["blocks"].values():
-            assert set(block["rows"]) <= recordings
-            assert len(block["bits"]) <= block["width"]
-            size = case_dir.joinpath(block["file"]).stat().st_size
-            assert size == len(block["rows"]) * block["width"] // 8
-            for chunk in block["rows"]:
-                assert not coverage[chunk].intersection(block["bits"])
-                coverage[chunk].update(block["bits"])
-        assert all(len(bits) == data["width"] for bits in coverage.values())
+    coverage = {chunk: set() for chunk in recordings}
+    for block in data["blocks"].values():
+        assert set(block["rows"]) <= recordings
+        assert len(block["bits"]) <= block["width"]
+        size = case_dir.joinpath(block["file"]).stat().st_size
+        assert size == len(block["rows"]) * block["width"] // 8
+        for chunk in block["rows"]:
+            assert not coverage[chunk].intersection(block["bits"])
+            coverage[chunk].update(block["bits"])
+    assert all(len(bits) == data["width"] for bits in coverage.values())
 
 
 def main() -> None:
